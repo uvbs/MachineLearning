@@ -13,7 +13,6 @@ class GradientDecent:
         self.learn_rate = 0.0000000001
 
     def algorithm(self, x):
-        # return np.log(self.a * x + self.b) + self.c
         return self.a * (x ** 2) + self.b * x + self.c
 
     def costfuntion(self):
@@ -30,9 +29,6 @@ class GradientDecent:
         partial_of_b = 0
         partial_of_c = 0
         for i in range(self.m):
-            # partial_of_a += 2 * (self.algorithm(x[i] - y[i])) * x[i]/(self.a * x[i] + self.b)
-            # partial_of_b += 2 * (self.algorithm(x[i] - y[i])) * 1/(self.a * x[i] + self.b)
-            # partial_of_c += 2 * (self.algorithm(x[i] - y[i])) * 1
             partial_of_a += 2 * (self.algorithm(x[i] - y[i])) * (self.x[i] ** 2)
             partial_of_b += 2 * (self.algorithm(x[i] - y[i])) * self.x[i]
             partial_of_c += 2 * (self.algorithm(x[i] - y[i])) * 1
