@@ -66,4 +66,3 @@ def testingNB():
     testEntry = ['stupid','garbage']
     thisDoc = np.array(setOfWords2Vec(myVocabList,testEntry))
     print("%s classified as: %s"%(testEntry,classifyNB(thisDoc,p0V,p1V,pAb)))
-    
