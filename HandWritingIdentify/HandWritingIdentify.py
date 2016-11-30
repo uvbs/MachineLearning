@@ -76,59 +76,39 @@ def imagedivide(image):
         if i in plainpoint and isbreak == True:
             breakpoint.append(round(sum(b)/len(b)))
             b = [];isbreak = False
-    breakpoint[0] = -1
+    breakpoint[0] = 0
     startandstop = []
     for i in range(len(breakpoint)):
         if i != len(breakpoint)-1:
-            startandstop.append((breakpoint[i]+1,breakpoint[i+1]))
+            startandstop.append((breakpoint[i],breakpoint[i+1]))
         else:
-            startandstop.append((breakpoint[-1],x-1))
+            startandstop.append((breakpoint[-1],x))
     return startandstop
     
-    
-    
-    
-    
-    
-    
-    return breakpoint
-
-
-
-
 #open and convert image
 def opener(image_name):
     image = Image.open(image_name)
     image=image.convert("L")
     return image
     
-    
-    
-    
-    
-    
+
 #change sample into bins
 def changeimage(image):
-    resizeimage = image.resize((32,32),Image.ANTIALIAS)
-    ImageList = [1 if resizeimage.getpixel((w,h)) < 127.5 else 0 for h in range(0,  32) for w in range(0, 32)]
+    resizeimage = image.resize((32,32))
+    ImageList = [1 if resizeimage.getpixel((w,h)) != 255 else 0 for h in range(0,  32) for w in range(0, 32)]
     return np.array(ImageList)
-
-    
-    
-    
+  
 
 #main function to  dispatch system
 def main():  
     str = ""
     Dataset,Labels = trainingsetconstructor()
-    image = opener("test3.jpg")  
+    image = opener("test1.jpg")  
     (x,y) = image.size
     breakpoints = imagedivide(image)
-    print(breakpoints )
+    print(breakpoints)
     for (a,b) in breakpoints:
-        partofimage = image.crop((a,0,b+1,32))
-        print(partofimage)
-        partofimage.show()
+        partofimage = image.crop((a,0,b,32))
         sample = changeimage(partofimage)
         str += classify(sample,Dataset,Labels,100)
     print(str)
